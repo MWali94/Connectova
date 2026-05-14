@@ -6,7 +6,7 @@
     <title>Register</title>
 </head>
 <body>
-    <h1>Get Started</h1>
+    <h2>Get Started</h2>
     <p>Hi, I’m Obiha, and I’m delighted to welcome you. Join us today and become part of our growing community!</p>
 </body>
 </html>
