@@ -6,7 +6,7 @@
     <title>live Chat</title>
 </head>
 <body>
-    <h1>Start a Converstion</h1>
-    <h2>By: Amina Abdul Ghafoor</h2>
+    <h2>Start a Converstion</h2>
+    <h3>By: Amina Abdul Ghafoor</h3>
 </body>
 </html>
