@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Poll Creation </title>
+    <title>Poll Creation</title>
 </head>
+
 <body>
-    <h1> Create a Poll </h1> 
-    <p> Want to create a Poll? </p> 
+
+    <h1>Create a Poll</h1>
+
+    <form method="POST">
+
+        <input type="text" name="question" placeholder="Enter poll question">
+
+        <input type="text" name="option1" placeholder="Option 1">
+
+        <input type="text" name="option2" placeholder="Option 2">
+
+        <input type="text" name="option3" placeholder="Option 3">
+
+        <button type="submit">Create Poll</button>
+
+    </form>
+
 </body>
 </html>
