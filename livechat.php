@@ -7,11 +7,16 @@
 </head>
 <body>
 <<<<<<< HEAD
-    <h2>Start a Converstion</h2>
+<<<<<<< HEAD
+    <h1>Start a Converstion</h1>
     <h3>By: Amina Abdul Ghafoor</h3>
 =======
     <h1>Start a Converstion</h1>
     <h2>By: Amina Abdul Ghafoor</h2>
 >>>>>>> 57f194759d71446bfa6cd85b41afead8f95c0a44
+=======
+    <h1>Start a Converstion</h1>
+    <h2>By: Amina Abdul Ghafoor</h2>
+>>>>>>> b69fa6e7f3f6b455379c90dbaf0dd07fc07cecb9
 </body>
 </html>
