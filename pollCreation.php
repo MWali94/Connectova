@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1> Create a Poll </h1> 
+    <p> Want to create a Poll? </p> 
 </body>
 </html>
