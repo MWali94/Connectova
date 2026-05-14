@@ -8,9 +8,9 @@ $database = "connectova";
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $database);
 
-// Check connection
+// Checking the main connection
 if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
+    die("Database connection is failed: " . mysqli_connect_error());
 }
 
 // Success message
