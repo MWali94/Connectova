@@ -10,7 +10,7 @@
 
     <h1>Create a Poll</h1>
 
-    <form method="POST">
+    <form method="POST" action="save_poll.php">
 
      <input type="text" name="question" placeholder="Enter poll question">
      <br><br> 
@@ -33,5 +33,21 @@
 
     </form>
 
+    <script>
+    let optionCount = 3;
+
+    function addOption() {
+        optionCount++;
+        
+        let container = document.getElementById("options-container");
+        
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "option" + optionCount;
+        input.placeholder = "Option " + optionCount;
+        
+        container.appendChild(input);
+    }
+   </script>
 </body>
 </html>
