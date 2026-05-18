@@ -23,6 +23,7 @@
         <button onclick="react('insane', pollId)">Insane ⚠️ <span id="count-insane">0</span></button>
         <button onclick="react('realll', pollId)">Realll ☁️ <span id="count-realll">0</span></button>
         <button onclick="react('wild', pollId)">Wild ⚡ <span id="count-wild">0</span></button>
+        <button onclick="react('hits', pollId)">Hits <span id="count-hits">0</span></button>
     </div>
 
     <script>
