@@ -33,6 +33,35 @@
 
     </form>
 
+    <!-- Custom Reactions -->
+
+   <div class="reactions">
+
+    <button>Fire 🔥</button>
+
+    <button>Slay ✨</button>
+
+    <button>Ate 🍽️</button>
+
+    <button>Hell Nahhh 💀</button>
+
+    <button>Cooked 🍳</button>
+
+    <button>Bruh 🙄</button>
+
+    <button>Canon 📖</button>
+
+    <button>Peak ⬆️</button>
+
+    <button>Valid ✔️</button>
+
+    <button>Insane ⚠️</button>
+
+    <button>Realll ☁️</button>
+
+    <button>Wild ⚡</button>
+
+   </div>
     <script>
     let optionCount = 3;
 
