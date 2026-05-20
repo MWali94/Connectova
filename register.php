@@ -257,65 +257,6 @@ Other
 
 
 
-<div>
-
-<p>
-
-Interests
-(Select at least 3)
-
-</p>
-
-
-<button type="button">
-
-Music
-
-</button>
-
-<button type="button">
-
-Gaming
-
-</button>
-
-<button type="button">
-
-Tech
-
-</button>
-
-<button type="button">
-
-Fashion
-
-</button>
-
-<button type="button">
-
-Sports
-
-</button>
-
-<button type="button">
-
-Travel
-
-</button>
-
-<button type="button">
-
-Art
-
-</button>
-
-<button type="button">
-
-Photography
-
-</button>
-
-</div>
 
 
 
