@@ -1,19 +1,20 @@
 <?php
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "connectova";
+$host="localhost";
+$user="root";
+$password="";
+$database="connectova";
 
-// Create connection
-$conn = mysqli_connect($host, $username, $password, $database);
+$conn =
+mysqli_connect(
+$host,
+$user,
+$password,
+$database
+);
 
-// Checking the main connection
-if (!$conn) {
-    die("Database connection is failed: " . mysqli_connect_error());
+if(!$conn){
+die("Connection Failed");
 }
-
-// Success message
-echo "Database connected successfully";
 
 ?>
