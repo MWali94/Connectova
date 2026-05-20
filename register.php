@@ -1,6 +1,6 @@
 <?php
 
-include("db.php");
+include("db_connection.php");
 
 $error = "";
 $success = "";
