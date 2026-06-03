@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +6,6 @@
 
   <link rel="stylesheet" href="chat.css">
 
- 
 
 </head>
 
@@ -21,11 +21,31 @@
         <input type="text" id="messageInput" placeholder="Type message">
 
        
-        <button id="emojiBtn">😊</button>
-        <div id="emojiPicker" class="emoji-picker hidden" aria-hidden="true"></div>
-       
-        <button id="sendBtn">Send</button>
+        <div class="emoji-container">
+
+  <button id="emojiBtn">😊</button>
+
+  <div id="emojiPicker" class="emoji-picker" aria-hidden="true">
+
+  <div id="recentRow" class="recent-row"></div>
+
+    <!-- Tabs -->
+    <div class="emoji-tabs">
+      <button class="tab active" data-cat="smileys">😀</button>
+      <button class="tab" data-cat="love">❤️</button>
+      <button class="tab" data-cat="gestures">👍</button>
+      <button class="tab" data-cat="food">🍔</button>
+      <button class="tab" data-cat="animals">🐶</button>
+      <button class="tab" data-cat="objects">🔥</button>
     </div>
+
+    <!-- Emoji Grid -->
+    <div id="emojiGrid" class="emoji-grid"></div>
+
+  </div>
+  <button id="sendBtn">Send</button>
+</div>
+         
 
 </div>
 

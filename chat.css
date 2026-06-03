@@ -59,6 +59,153 @@ button {
   color: white;
 }
 
+#emojiBtn {
+  padding: 8px 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.emoji-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Picker base */
+.emoji-picker {
+  position: absolute;
+  bottom: 55px;
+  left: 0;
+
+  width: 280px;
+  height: 320px;
+
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+
+  transition: all 0.4s ease;
+}
+
+/* open state */
+.emoji-picker.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Tabs */
+.emoji-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.emoji-tabs .tab {
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.6;
+}
+
+.emoji-tabs .tab.active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Emoji grid */
+.emoji-grid {
+  flex: 1;
+  padding: 6px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 2px; /* smaller gap */
+
+  align-content: flex-start; /* IMPORTANT fixes row spacing */
+
+  overflow-y: auto;
+}
+
+/* Emoji button */
+.emoji {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  padding: 2px; /* reduce spacing */
+  margin: 0;
+  line-height: 1;
+}
+
+.emoji:hover {
+  transform: scale(1.3);
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+  .emoji-picker {
+    width: 95vw;
+    left: 50%;
+    transform: translate(-50%, 10px);
+  }
+
+  .emoji-picker.show {
+    transform: translate(-50%, 0);
+  }
+}
+.recent-row {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border-bottom: 1px solid #eee;
+  min-height: 32px;
+}
+
+.recent-row .emoji {
+  font-size: 20px;
+  background: none;
+  border: none;
+}
+.emoji.pop {
+  transform: scale(1.8);
+  transition: transform 0.2s ease;
+}
+.emoji-picker {
+  max-height: 45vh;
+}
+.skin-menu {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  gap: 4px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 4px;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.skin-option {
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 /* Inline emoji picker fallback styles */
 /* .emoji-picker {
   position: absolute;

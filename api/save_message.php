@@ -1,26 +1,47 @@
 <?php
 
+header("Content-Type: application/json");
+
 $conn = new mysqli("localhost", "root", "", "connectova");
 
 if ($conn->connect_error) {
-    die("Connection failed");
+    echo json_encode(["status" => "db_error"]);
+    exit;
 }
 
-// get JSON data
 $data = json_decode(file_get_contents("php://input"), true);
 
-$sender_id = 1; // temporary user id
+// DEBUG check
+if (!$data) {
+    echo json_encode([
+        "status" => "no_json_received"
+    ]);
+    exit;
+}
+
+if (!isset($data['message'])) {
+    echo json_encode([
+        "status" => "no_message"
+    ]);
+    exit;
+}
+
+$sender_id = 2;
 $message = $data['message'];
 
-// insert message
 $stmt = $conn->prepare("INSERT INTO chats (sender_id, message) VALUES (?, ?)");
+
+if (!$stmt) {
+    echo json_encode(["status" => "prepare_failed", "error" => $conn->error]);
+    exit;
+}
 
 $stmt->bind_param("is", $sender_id, $message);
 
-$stmt->execute();
-
-echo json_encode([
-    "status" => "success"
-]);
+if ($stmt->execute()) {
+    echo json_encode(["status" => "success"]);
+} else {
+    echo json_encode(["status" => "insert_failed", "error" => $stmt->error]);
+}
 
 ?>
