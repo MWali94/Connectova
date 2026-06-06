@@ -206,24 +206,3 @@ button {
   border: none;
   cursor: pointer;
 }
-/* Inline emoji picker fallback styles */
-/* .emoji-picker {
-  position: absolute;
-  bottom: 60px;
-  left: 20px;
-  width: 260px;
-  max-height: 200px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  padding: 8px;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 6px;
-  z-index: 1000;
-} */
-
-/* .emoji-picker.hidden { display: none; }
-.emoji-picker button.emoji { font-size: 20px; background: transparent; border: none; cursor: pointer; } */

@@ -1,12 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Connectova Chat</title>
-
-  <link rel="stylesheet" href="chat.css">
-
-
+    <link rel="stylesheet" href="chat.css">
 </head>
 
 <body>
@@ -18,50 +14,38 @@
     <div id="chatBox"></div>
 
     <div class="input-area">
-        <input type="text" id="messageInput" placeholder="Type message">
 
-       
+        <input
+            type="text"
+            id="messageInput"
+            placeholder="Type message"
+        >
+
+        <!-- Emoji Button -->
         <div class="emoji-container">
+            <button type="button" id="emojiBtn">😊</button>
 
-  <button id="emojiBtn">😊</button>
+            <!-- Hidden Emoji Picker -->
+            <div id="emojiWrapper"
+                 style="display:none; position:absolute; bottom:60px; right:10px; z-index:9999;">
+                <emoji-picker id="emojiPicker"></emoji-picker>
+            </div>
+        </div>
 
-  <div id="emojiPicker" class="emoji-picker" aria-hidden="true">
+        <button type="button" id="sendBtn">Send</button>
 
-  <div id="recentRow" class="recent-row"></div>
-
-    <!-- Tabs -->
-    <div class="emoji-tabs">
-      <button class="tab active" data-cat="smileys">😀</button>
-      <button class="tab" data-cat="love">❤️</button>
-      <button class="tab" data-cat="gestures">👍</button>
-      <button class="tab" data-cat="food">🍔</button>
-      <button class="tab" data-cat="animals">🐶</button>
-      <button class="tab" data-cat="objects">🔥</button>
     </div>
 
-    <!-- Emoji Grid -->
-    <div id="emojiGrid" class="emoji-grid"></div>
-
-  </div>
-  <button id="sendBtn">Send</button>
-</div>
-         
-
 </div>
 
-
-
-   <!-- Socket.IO MUST load first -->
+<!-- Socket.IO -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
-<!-- Emoji library (with fallback to unpkg if jsDelivr is blocked) -->
-<script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.2/dist/index.min.js" onerror="this.onerror=null;this.src='https://unpkg.com/@joeattardi/emoji-button@4.6.2/dist/index.min.js'"></script>
+<!-- Emoji Picker Element (IMPORTANT) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 
-
-<!-- Your app -->
+<!-- Chat JS -->
 <script src="chat.js"></script>
-
-
 
 </body>
 </html>
