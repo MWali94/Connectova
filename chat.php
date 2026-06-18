@@ -18,21 +18,45 @@
         <input
             type="text"
             id="messageInput"
+            class="message-input"
             placeholder="Type message"
         >
+<button id="uploadBtn">Upload</button>
+<input
+  type="file"
+  id="fileInput"
+  accept="image/*,.pdf,.doc,.docx,.txt"
+  hidden
+/>
 
-        <!-- Emoji Button -->
-        <div class="emoji-container">
-            <button type="button" id="emojiBtn">😊</button>
+        <!-- Emoji Section -->
+      <div class="emoji-container">
 
-            <!-- Hidden Emoji Picker -->
-            <div id="emojiWrapper"
-                 style="display:none; position:absolute; bottom:60px; right:10px; z-index:9999;">
-                <emoji-picker id="emojiPicker"></emoji-picker>
-            </div>
+    <button
+        type="button"
+        id="emojiBtn"
+        class="emoji-btn"
+    >
+        😊
+    </button>
+
+    <div
+        id="emojiWrapper"
+        class="emoji-wrapper"
+    >
+        <emoji-picker id="emojiPicker"></emoji-picker>
+    </div>
+
+</div>
         </div>
 
-        <button type="button" id="sendBtn">Send</button>
+        <button
+            type="button"
+            id="sendBtn"
+            class="send-btn"
+        >
+            Send
+        </button>
 
     </div>
 
@@ -41,10 +65,12 @@
 <!-- Socket.IO -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
-<!-- Emoji Picker Element (IMPORTANT) -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+<!-- Emoji Picker -->
+<script
+type="module"
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@latest/index.js"></script>
 
-<!-- Chat JS -->
+
 <script src="chat.js"></script>
 
 </body>

@@ -1,20 +1,20 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   padding: 20px;
   background: #f5f7fb;
 }
 
 .chat-container {
-  width: 420px;
-  margin: auto;
+  width: 500px;
+  margin: 30px auto;
 }
 
 #chatBox {
   height: 420px;
   border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #fff;
-  overflow-y: scroll;
+  border-radius: 12px;
+  background: white;
+  overflow-y: auto;
   padding: 10px;
 }
 
@@ -26,183 +26,128 @@ body {
   max-width: 80%;
 }
 
-#inputBox {
-  display: flex;
-  margin-top: 10px;
-  gap: 8px;
-}
+/* INPUT ROW */
 
-/* match HTML class name used in chat.php
 .input-area {
   display: flex;
-  margin-top: 10px;
-  gap: 8px;
-  position: relative;
-} */
+  align-items: center;
+  gap: 30px;
+  margin-top: 12px;
+}
+
+/* MESSAGE INPUT */
 
 #messageInput {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
 }
 
-button {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+/* SEND BUTTON */
 
 #sendBtn {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
   background: #4caf50;
   color: white;
-}
-
-#emojiBtn {
-  padding: 8px 12px;
-  font-size: 20px;
   cursor: pointer;
 }
+
+/* EMOJI SECTION */
 
 .emoji-container {
   position: relative;
-  display: inline-block;
 }
 
-/* Picker base */
-.emoji-picker {
+/* BUTTON */
+
+.emoji-btn {
+  width: 46px;
+  height: 46px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f3f4f6;
+
+  font-size: 22px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.emoji-btn:hover {
+  transform: scale(1.08);
+  background: #e5e7eb;
+}
+
+.emoji-btn:active {
+  transform: scale(0.92);
+}
+
+/* PICKER WRAPPER */
+
+.emoji-wrapper {
   position: absolute;
-  bottom: 55px;
-  left: 0;
-
-  width: 280px;
-  height: 320px;
-
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: hidden;
+  bottom: 60px;
+  right: 0;
 
   opacity: 0;
-  transform: translateY(10px);
+  visibility: hidden;
+
   pointer-events: none;
 
-  transition: all 0.4s ease;
+  transform: translateY(15px) scale(0.9);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+
+  z-index: 99999;
 }
 
-/* open state */
-.emoji-picker.show {
+.emoji-wrapper.show {
   opacity: 1;
-  transform: translateY(0);
+  visibility: visible;
   pointer-events: auto;
+
+  transform: translateY(0) scale(1);
 }
 
-/* Tabs */
-.emoji-tabs {
-  display: flex;
-  justify-content: space-around;
-  padding: 6px;
-  border-bottom: 1px solid #eee;
-  background: #fafafa;
+/* WEB COMPONENT */
+
+emoji-picker {
+  width: 350px;
+  height: 420px;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 }
 
-.emoji-tabs .tab {
-  font-size: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  opacity: 0.6;
+/* POP ANIMATION */
+
+.emoji-wrapper.show emoji-picker {
+  animation: emojiPop 0.3s ease;
 }
 
-.emoji-tabs .tab.active {
-  opacity: 1;
-  transform: scale(1.2);
-}
-
-/* Emoji grid */
-.emoji-grid {
-  flex: 1;
-  padding: 6px;
-
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 2px; /* smaller gap */
-
-  align-content: flex-start; /* IMPORTANT fixes row spacing */
-
-  overflow-y: auto;
-}
-
-/* Emoji button */
-.emoji {
-  font-size: 22px;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  padding: 2px; /* reduce spacing */
-  margin: 0;
-  line-height: 1;
-}
-
-.emoji:hover {
-  transform: scale(1.3);
-}
-
-/* Mobile optimization */
-@media (max-width: 480px) {
-  .emoji-picker {
-    width: 95vw;
-    left: 50%;
-    transform: translate(-50%, 10px);
+@keyframes emojiPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
   }
 
-  .emoji-picker.show {
-    transform: translate(-50%, 0);
+  70% {
+    transform: scale(1.03);
   }
-}
-.recent-row {
-  display: flex;
-  gap: 4px;
-  padding: 6px;
-  border-bottom: 1px solid #eee;
-  min-height: 32px;
-}
 
-.recent-row .emoji {
-  font-size: 20px;
-  background: none;
-  border: none;
-}
-.emoji.pop {
-  transform: scale(1.8);
-  transition: transform 0.2s ease;
-}
-.emoji-picker {
-  max-height: 45vh;
-}
-.skin-menu {
-  position: absolute;
-  bottom: 40px;
-  display: flex;
-  gap: 4px;
-  background: white;
-  border: 1px solid #ddd;
-  padding: 4px;
-  border-radius: 8px;
-  z-index: 999;
-}
-
-.skin-option {
-  font-size: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
