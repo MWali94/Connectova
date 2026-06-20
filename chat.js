@@ -9,13 +9,28 @@ const fileInput = document.getElementById("fileInput");
 
 console.log("Frontend loaded");
 
-// ======================
-// EMOJI PICKER
-// ======================
+/*
+|--------------------------------------------------------------------------
+| CURRENT CHAT STATE
+|--------------------------------------------------------------------------
+| receiver = selected user (from user list)
+| sender = backend session (PHP)
+|--------------------------------------------------------------------------
+*/
+
+let currentReceiverId = 1; // TEMP (replace when user list exists)
+let currentUserId = null; // will be set later from server (optional)
+
+// emojis picker logic
 window.addEventListener("load", () => {
   const wrapper = document.getElementById("emojiWrapper");
   const picker = document.getElementById("emojiPicker");
   const input = document.getElementById("messageInput");
+
+  if (!picker) {
+    console.error("Emoji picker not loaded");
+    return;
+  }
 
   emojiBtn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -34,37 +49,56 @@ window.addEventListener("load", () => {
   });
 });
 
-// ======================
-// MESSAGE RENDER (IMPORTANT FIX)
-// ======================
+/*
+|--------------------------------------------------------------------------
+| LOAD MESSAGES
+|--------------------------------------------------------------------------
+*/
+
+function loadMessages() {
+  fetch(`api/fetch_message.php?receiver_id=${currentReceiverId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("FETCH DATA:", data);
+
+      chatBox.innerHTML = "";
+
+      if (!Array.isArray(data)) return;
+
+      data.forEach(renderMessage);
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch((err) => console.error("FETCH ERROR:", err));
+}
+
+/*
+|--------------------------------------------------------------------------
+| RENDER MESSAGE
+|--------------------------------------------------------------------------
+*/
+
 function renderMessage(msg) {
   const div = document.createElement("div");
   div.classList.add("message");
 
-  // OUTGOING / INCOMING
-  div.classList.add(msg.sender_id == 2 ? "outgoing" : "incoming");
+  // IMPORTANT: dynamic sender check (NOT hardcoded 2)
+  div.classList.add(msg.sender_id == currentUserId ? "outgoing" : "incoming");
 
   const content = document.createElement("div");
   content.classList.add("message-content");
 
-  // TEXT MESSAGE
   if (msg.message_type === "text") {
     const p = document.createElement("p");
     p.innerText = msg.message;
     content.appendChild(p);
-  }
-
-  // IMAGE MESSAGE
-  else if (msg.message_type === "image") {
+  } else if (msg.message_type === "image") {
     const img = document.createElement("img");
     img.src = msg.file_path;
     img.style.maxWidth = "200px";
     img.style.borderRadius = "10px";
     content.appendChild(img);
-  }
-
-  // DOCUMENT MESSAGE
-  else if (msg.message_type === "document") {
+  } else if (msg.message_type === "document") {
     const a = document.createElement("a");
     a.href = msg.file_path;
     a.target = "_blank";
@@ -74,35 +108,14 @@ function renderMessage(msg) {
 
   div.appendChild(content);
   chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// ======================
-// FETCH MESSAGES (IMPORTANT FIX)
-// ======================
-function loadMessages() {
-  fetch("api/fetch_message.php")
-    .then((res) => res.text())
-    .then((text) => {
-      console.log("RAW RESPONSE:", text);
+/*
+|--------------------------------------------------------------------------
+| SEND MESSAGE (TEXT)
+|--------------------------------------------------------------------------
+*/
 
-      const data = JSON.parse(text); // convert manually
-
-      chatBox.innerHTML = "";
-
-      data.forEach((msg) => {
-        renderMessage(msg);
-      });
-    })
-    .catch((err) => console.error("FETCH ERROR:", err));
-}
-
-// call on load
-loadMessages();
-
-// ======================
-// SEND TEXT MESSAGE
-// ======================
 sendBtn.addEventListener("click", sendMessage);
 
 messageInput.addEventListener("keypress", (e) => {
@@ -110,32 +123,67 @@ messageInput.addEventListener("keypress", (e) => {
 });
 
 function sendMessage() {
+  console.log("Send button clicked");
+
   const message = messageInput.value.trim();
+  console.log("Message:", message);
+
   if (!message) return;
 
-  socket.emit("send_message", { message });
+  if (!message) return;
+
+  console.log("SENDING MESSAGE:", message);
+  console.log("RECEIVER:", currentReceiverId);
 
   fetch("api/save_message.php", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      message,
+      message: message,
+      receiver_id: currentReceiverId,
       message_type: "text",
     }),
   })
-    .then((res) => res.json())
-    .then((data) => {
+    .then((res) => res.text()) // IMPORTANT CHANGE
+    .then((text) => {
+      console.log("RAW SAVE RESPONSE:", text);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("Invalid JSON from PHP:", text);
+        return;
+      }
+
       console.log("DB RESPONSE:", data);
-      loadMessages(); // refresh chat
+
+      if (!data.success) {
+        alert(data.error);
+        return;
+      }
+
+      loadMessages();
     })
-    .catch((err) => console.error(err));
+
+    .catch((err) => console.error("FETCH ERROR:", err));
 
   messageInput.value = "";
+  // REAL-TIME SOCKET EMIT
+  socket.emit("new_message", {
+    message,
+    receiver_id: currentReceiverId,
+  });
 }
 
-// ======================
-// FILE UPLOAD
-// ======================
+/*
+|--------------------------------------------------------------------------
+| FILE UPLOAD (IMAGE / DOC)
+|--------------------------------------------------------------------------
+*/
+
 uploadBtn.addEventListener("click", () => fileInput.click());
 
 fileInput.addEventListener("change", () => {
@@ -151,21 +199,16 @@ fileInput.addEventListener("change", () => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log("UPLOAD RESPONSE:", data);
-
       if (!data.success) return;
-
-      socket.emit("send_message", {
-        message: data.filename,
-        type: data.type,
-        fileUrl: data.fileUrl,
-      });
 
       return fetch("api/save_message.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           message: data.filename,
+          receiver_id: currentReceiverId,
           message_type: data.type,
           file_name: data.filename,
           file_path: data.fileUrl,
@@ -175,9 +218,31 @@ fileInput.addEventListener("change", () => {
     .then((res) => res?.json())
     .then((result) => {
       console.log("FILE SAVED:", result);
-      loadMessages(); // refresh chat
+      loadMessages();
+
+      socket.emit("new_message", {
+        receiver_id: currentReceiverId,
+      });
     })
     .catch((err) => console.error("UPLOAD ERROR:", err));
 
   fileInput.value = "";
 });
+
+/*
+|--------------------------------------------------------------------------
+| SOCKET REAL-TIME RECEIVE
+|--------------------------------------------------------------------------
+*/
+
+socket.on("new_message", (data) => {
+  loadMessages();
+});
+
+/*
+|--------------------------------------------------------------------------
+| INITIAL LOAD
+|--------------------------------------------------------------------------
+*/
+
+loadMessages();
